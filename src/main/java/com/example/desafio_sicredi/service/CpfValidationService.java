@@ -12,6 +12,16 @@ public class CpfValidationService {
     private static final String RANDOM_USER_API = "https://randomuser.me/api/";
 
     public boolean isAbleToVote(String cpf) {
+
+        // Verifica se o CPF é nulo ou vazio
+        if (cpf == null || cpf.isEmpty()) {
+            return false;
+        }
+
+        // Verifica se o CPF contém apenas números, pontos (.) e hífens (-)
+        if (!cpf.matches("[0-9.-]+")) {
+            return false;
+        }
         // Simulação: Se o último dígito do CPF for par, o CPF é considerado válido
         int lastDigit = Integer.parseInt(cpf.substring(cpf.length() - 1));
 
