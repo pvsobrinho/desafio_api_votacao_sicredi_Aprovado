@@ -40,10 +40,13 @@ class VotoServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        votoDto = new VotoDto();
-        votoDto.setPautaId(1L);
-        votoDto.setCpf("12345678909");
-        votoDto.setVoto(true);
+        votoDto = new VotoDto(
+                null,
+                1L,
+                1L,
+                true,
+                "12345678909"
+        );
 
         pauta = new PautaEntity();
         pauta.setId(1L);
@@ -53,21 +56,20 @@ class VotoServiceTest {
     @Test
     void registrarVoto_DeveRegistrarQuandoCpfValido() {
         when(pautaRepository.findById(1L)).thenReturn(Optional.of(pauta));
-
         when(cpfValidationService.isAbleToVote("12345678909")).thenReturn(true);
 
         VotoEntity votoEntity = new VotoEntity();
         votoEntity.setId(1L);
         votoEntity.setPautaEntity(pauta);
-
         when(votoRepository.save(any(VotoEntity.class))).thenReturn(votoEntity);
 
         VotoDto resultado = votoService.registrarVoto(votoDto);
 
         assertNotNull(resultado);
-        assertEquals(1L, resultado.getId());
+        assertEquals(1L, resultado.id());
         verify(votoRepository, times(1)).save(any(VotoEntity.class));
     }
+
 
 
     @Test

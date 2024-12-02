@@ -30,11 +30,11 @@ public class VotoService {
 
     public VotoDto registrarVoto(VotoDto votoDto) {
         // Valida se a pauta existe
-        PautaEntity pauta = pautaRepository.findById(votoDto.getPautaId())
+        PautaEntity pauta = pautaRepository.findById(votoDto.pautaId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pauta não encontrada"));
 
         // Valida o CPF via serviço simulado
-        boolean canVote = cpfValidationService.isAbleToVote(votoDto.getCpf());
+        boolean canVote = cpfValidationService.isAbleToVote(votoDto.cpf());
         if (!canVote) {
             // Retorna um erro 400 (Bad Request) se o CPF for inválido
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CPF inválido ou associado não está apto a votar.");
@@ -51,7 +51,7 @@ public class VotoService {
 
         // Validar o CPF novamente ao atualizar o voto
         // Como dito anteriormente a informação do CPF não é gravada no banco de dados para este exemplo o voto é secreto.
-        boolean canVote = cpfValidationService.isAbleToVote(votoDto.getCpf());
+        boolean canVote = cpfValidationService.isAbleToVote(votoDto.cpf());
         if (!canVote) {
             throw new IllegalArgumentException("Associado não está apto a votar ou CPF inválido (simulação de validação).");
         }

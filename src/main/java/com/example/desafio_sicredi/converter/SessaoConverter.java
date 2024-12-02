@@ -10,11 +10,11 @@ public class SessaoConverter {
 
     public static SessaoEntity toEntity(SessaoDto dto, PautaRepository pautaRepository) {
         SessaoEntity sessaoEntity = new SessaoEntity();
-        sessaoEntity.setId(dto.getId());
-        sessaoEntity.setInicio(dto.getInicio());
-        sessaoEntity.setFim(dto.getFim());
+        sessaoEntity.setId(dto.id());
+        sessaoEntity.setInicio(dto.inicio());
+        sessaoEntity.setFim(dto.fim());
 
-        PautaEntity pautaEntity = pautaRepository.findById(dto.getPautaId())
+        PautaEntity pautaEntity = pautaRepository.findById(dto.pautaId())
                 .orElseThrow(() -> new EntityNotFoundException("Pauta não encontrada"));
         sessaoEntity.setPautaEntity(pautaEntity);
 
@@ -22,11 +22,11 @@ public class SessaoConverter {
     }
 
     public static SessaoDto toDto(SessaoEntity sessaoEntity) {
-        SessaoDto dto = new SessaoDto();
-        dto.setId(sessaoEntity.getId());
-        dto.setPautaId(sessaoEntity.getPautaEntity().getId());
-        dto.setInicio(sessaoEntity.getInicio());
-        dto.setFim(sessaoEntity.getFim());
-        return dto;
+        return new SessaoDto(
+                sessaoEntity.getId(),
+                sessaoEntity.getPautaEntity().getId(),
+                sessaoEntity.getInicio(),
+                sessaoEntity.getFim()
+        );
     }
 }

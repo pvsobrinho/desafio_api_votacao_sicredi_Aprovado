@@ -7,17 +7,17 @@ public class PautaConverter {
 
     public static PautaEntity toEntity(PautaDto dto) {
         PautaEntity pautaEntity = new PautaEntity();
-        pautaEntity.setId(dto.getId());
-        pautaEntity.setDescricao(dto.getDescricao());
-        pautaEntity.setDataCriacao(dto.getDataCriacao());
+        pautaEntity.setId(dto.id());
+        pautaEntity.setDescricao(dto.descricao());
+        pautaEntity.setDataCriacao(dto.dataCriacao());
         return pautaEntity;
     }
 
     public static PautaDto toDto(PautaEntity pautaEntity) {
-        PautaDto dto = new PautaDto();
-        dto.setId(pautaEntity.getId());
-        dto.setDescricao(pautaEntity.getDescricao());
-        dto.setDataCriacao(pautaEntity.getDataCriacao());
-        return dto;
+        return new PautaDto(
+                pautaEntity.getId(),
+                pautaEntity.getDescricao(),
+                pautaEntity.getDataCriacao()
+        );
     }
 }
